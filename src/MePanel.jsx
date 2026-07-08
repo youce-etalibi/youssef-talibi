@@ -67,14 +67,8 @@ function Counter({ to, duration = 1.3, delay = 0.35 }) {
 }
 
 /* ---- Motion variants --------------------------------------------------- */
-const backdrop = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.3 } },
-  exit: { opacity: 0, transition: { duration: 0.25 } },
-}
-
 const card = {
-  hidden: { opacity: 0, scale: 0.9, y: 40, filter: 'blur(12px)' },
+  hidden: { opacity: 0, scale: 0.92, y: 30, filter: 'blur(12px)' },
   show: {
     opacity: 1,
     scale: 1,
@@ -85,7 +79,7 @@ const card = {
       stiffness: 260,
       damping: 26,
       staggerChildren: 0.06,
-      delayChildren: 0.12,
+      delayChildren: 0.1,
     },
   },
   exit: {
@@ -93,13 +87,18 @@ const card = {
     scale: 0.94,
     y: 24,
     filter: 'blur(8px)',
-    transition: { duration: 0.22 },
+    transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
 const item = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
+}
+
+const contentContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.14 } },
 }
 
 export default function MePanel({ onClose }) {
@@ -117,27 +116,21 @@ export default function MePanel({ onClose }) {
 
   return (
     <motion.div
-      className="me-backdrop"
-      variants={backdrop}
+      className="me-card"
+      variants={card}
       initial="hidden"
       animate="show"
       exit="exit"
-      onClick={onClose}
+      role="region"
+      aria-label="About Youssef Talibi"
     >
-      <motion.div
-        className="me-card"
-        variants={card}
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-label="About Youssef Talibi"
-      >
-        <button className="me-close" onClick={onClose} aria-label="Close">
-          <Icon icon="solar:close-circle-bold-duotone" />
-        </button>
+      <button className="me-back" onClick={onClose} aria-label="Back">
+        <Icon icon="solar:arrow-left-linear" />
+        <span>Back</span>
+      </button>
 
-        {/* ---- Left: framed photo ---- */}
-        <motion.div className="me-photo" variants={item}>
+      {/* ---- Left: framed photo ---- */}
+      <motion.div className="me-photo" variants={item}>
           <div className="me-photo__ring">
             <img src="/img.jpg" alt="Youssef Talibi" />
             <div className="me-photo__shine" aria-hidden="true" />
@@ -152,8 +145,8 @@ export default function MePanel({ onClose }) {
           </div>
         </motion.div>
 
-        {/* ---- Right: content ---- */}
-        <div className="me-content">
+      {/* ---- Right: content ---- */}
+      <motion.div className="me-content" variants={contentContainer}>
           <motion.div className="me-head" variants={item}>
             <h2 className="me-name">
               Youssef Talibi
@@ -234,8 +227,7 @@ export default function MePanel({ onClose }) {
             </div>
             <Icon icon="solar:arrow-right-up-bold-duotone" className="me-ai__go" />
           </motion.div>
-        </div>
-      </motion.div>
+        </motion.div>
     </motion.div>
   )
 }

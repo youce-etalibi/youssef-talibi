@@ -18,10 +18,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(8px, 2vh, 22px);
   padding: 24px;
   pointer-events: none;
   text-align: center;
+}
+
+/* Hero (greeting + avatar + nav) — swaps with section panels */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2vh, 22px);
+  width: 100%;
 }
 
 /* ============================================================

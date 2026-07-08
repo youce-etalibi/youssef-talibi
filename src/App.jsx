@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import FluidCursor from './FluidCursor.jsx'
 import MePanel from './MePanel.jsx'
@@ -14,6 +14,22 @@ const NAV_ITEMS = [
   { label: 'Contact', icon: 'solar:chat-round-dots-bold-duotone' },
 ]
 
+const hero = {
+  hidden: { opacity: 0, scale: 0.94, filter: 'blur(10px)' },
+  show: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.92,
+    filter: 'blur(10px)',
+    transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
 export default function App() {
   const [openSection, setOpenSection] = useState(null)
 
@@ -22,39 +38,52 @@ export default function App() {
       {/* Interactive WebGL fluid that follows the cursor */}
       <FluidCursor />
 
-      {/* Foreground hero — pointer-events pass through to the fluid,
-          only the buttons capture clicks */}
+      {/* Foreground — hero and section panels swap in the same centre spot.
+          pointer-events pass through to the fluid; interactive bits opt in. */}
       <div className="overlay">
-        <header className="greeting">
-          <h1 className="greeting__hello">Hello</h1>
-          <p className="greeting__welcome">Welcome to my world</p>
-        </header>
-
-        <div className="avatar">
-          <img src="/3D_face.png" alt="3D avatar" className="avatar__img" />
-          <div className="avatar__glow" aria-hidden="true" />
-        </div>
-
-        <nav className="glass-nav">
-          {NAV_ITEMS.map(({ label, icon }) => (
-            <button
-              key={label}
-              className="glass-pill"
-              type="button"
-              onClick={() => setOpenSection(label)}
+        <AnimatePresence mode="wait">
+          {openSection === 'Me' ? (
+            <MePanel key="me" onClose={() => setOpenSection(null)} />
+          ) : (
+            <motion.div
+              key="hero"
+              className="hero"
+              variants={hero}
+              initial="hidden"
+              animate="show"
+              exit="exit"
             >
-              <Icon icon={icon} className="glass-pill__icon" aria-hidden="true" />
-              <span className="glass-pill__label">{label}</span>
-            </button>
-          ))}
-        </nav>
-      </div>
+              <header className="greeting">
+                <h1 className="greeting__hello">Hello</h1>
+                <p className="greeting__welcome">Welcome to my world</p>
+              </header>
 
-      <AnimatePresence>
-        {openSection === 'Me' && (
-          <MePanel onClose={() => setOpenSection(null)} />
-        )}
-      </AnimatePresence>
+              <div className="avatar">
+                <img src="/3D_face.png" alt="3D avatar" className="avatar__img" />
+                <div className="avatar__glow" aria-hidden="true" />
+              </div>
+
+              <nav className="glass-nav">
+                {NAV_ITEMS.map(({ label, icon }) => (
+                  <button
+                    key={label}
+                    className="glass-pill"
+                    type="button"
+                    onClick={() => setOpenSection(label)}
+                  >
+                    <Icon
+                      icon={icon}
+                      className="glass-pill__icon"
+                      aria-hidden="true"
+                    />
+                    <span className="glass-pill__label">{label}</span>
+                  </button>
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
