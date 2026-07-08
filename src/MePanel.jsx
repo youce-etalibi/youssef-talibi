@@ -67,38 +67,33 @@ function Counter({ to, duration = 1.3, delay = 0.35 }) {
 }
 
 /* ---- Motion variants --------------------------------------------------- */
-const card = {
-  hidden: { opacity: 0, scale: 0.92, y: 30, filter: 'blur(12px)' },
+const page = {
+  hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
-    scale: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: {
-      type: 'spring',
-      stiffness: 260,
-      damping: 26,
-      staggerChildren: 0.06,
-      delayChildren: 0.1,
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.07,
+      delayChildren: 0.12,
     },
   },
   exit: {
     opacity: 0,
-    scale: 0.94,
-    y: 24,
-    filter: 'blur(8px)',
-    transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
+    y: 16,
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
   },
 }
 
 const item = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-}
-
-const contentContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.14 } },
+  hidden: { opacity: 0, y: 22, filter: 'blur(8px)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 260, damping: 26 },
+  },
 }
 
 export default function MePanel({ onClose }) {
@@ -116,8 +111,8 @@ export default function MePanel({ onClose }) {
 
   return (
     <motion.div
-      className="me-card"
-      variants={card}
+      className="me-page"
+      variants={page}
       initial="hidden"
       animate="show"
       exit="exit"
@@ -129,60 +124,65 @@ export default function MePanel({ onClose }) {
         <span>Back</span>
       </button>
 
-      {/* ---- Left: framed photo ---- */}
-      <motion.div className="me-photo" variants={item}>
-          <div className="me-photo__ring">
-            <img src="/img.jpg" alt="Youssef Talibi" />
-            <div className="me-photo__shine" aria-hidden="true" />
+      <div className="me-shell">
+        {/* ============ HERO BAND ============ */}
+        <motion.header className="me-hero" variants={item}>
+          {/* framed photo */}
+          <div className="me-photo">
+            <div className="me-photo__ring">
+              <img src="/img.jpg" alt="Youssef Talibi" />
+              <div className="me-photo__shine" aria-hidden="true" />
+            </div>
+            <div className="me-photo__flag">
+              <MoroccoFlag size={22} />
+              <span>Morocco</span>
+            </div>
           </div>
-          <div className="me-photo__flag">
-            <MoroccoFlag size={26} />
-            <span>Morocco</span>
-          </div>
-          <div className="me-photo__status">
-            <span className="me-photo__dot" />
-            Open to work
-          </div>
-        </motion.div>
 
-      {/* ---- Right: content ---- */}
-      <motion.div className="me-content" variants={contentContainer}>
-          <motion.div className="me-head" variants={item}>
+          {/* identity + bio + stats */}
+          <div className="me-intro">
+            <span className="me-eyebrow">
+              <Icon icon="solar:hand-shake-bold-duotone" />
+              About me
+            </span>
+
             <h2 className="me-name">
               Youssef Talibi
               <Icon icon="solar:verified-check-bold" className="me-verified" />
             </h2>
+
             <div className="me-role">
               <Icon icon="solar:code-2-bold-duotone" />
               Software Developer
               <span className="me-dot-sep" />
-              <MoroccoFlag size={18} />
+              <MoroccoFlag size={16} />
               Morocco
             </div>
-          </motion.div>
 
-          {/* Stat tiles */}
-          <motion.div className="me-stats" variants={item}>
-            {stats.map((s, i) => (
-              <div className="me-stat" key={i} style={{ '--accent': s.accent }}>
-                <Icon icon={s.icon} className="me-stat__icon" />
-                <div className="me-stat__value">{s.value}</div>
-                <div className="me-stat__label">{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
+            <p className="me-bio">
+              I'm a Software Developer from Morocco who loves turning ideas into
+              clean, efficient web applications. I enjoy solving problems and I
+              lean on <strong>AI-assisted programming</strong> to ship better
+              software, faster — while never stopping learning.
+            </p>
 
-          {/* Bio */}
-          <motion.p className="me-bio" variants={item}>
-            I'm a Software Developer from Morocco who loves turning ideas into
-            clean, efficient web applications. I enjoy solving problems and I
-            lean on <strong>AI-assisted programming</strong> to ship better
-            software, faster — while never stopping learning.
-          </motion.p>
+            <div className="me-stats">
+              {stats.map((s, i) => (
+                <div className="me-stat" key={i} style={{ '--accent': s.accent }}>
+                  <Icon icon={s.icon} className="me-stat__icon" />
+                  <div className="me-stat__value">{s.value}</div>
+                  <div className="me-stat__label">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.header>
 
-          {/* Education — American-style shield badges */}
-          <motion.div className="me-section" variants={item}>
-            <div className="me-section__title">
+        {/* ============ ORGANIZED GRID ============ */}
+        <div className="me-grid">
+          {/* Education */}
+          <motion.section className="me-block" variants={item}>
+            <div className="me-block__title">
               <Icon icon="solar:square-academic-cap-2-bold-duotone" />
               Education
             </div>
@@ -200,11 +200,11 @@ export default function MePanel({ onClose }) {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </motion.section>
 
-          {/* Skills — pill tags */}
-          <motion.div className="me-section" variants={item}>
-            <div className="me-section__title">
+          {/* Skills */}
+          <motion.section className="me-block" variants={item}>
+            <div className="me-block__title">
               <Icon icon="solar:star-shine-bold-duotone" />
               What I do
             </div>
@@ -216,18 +216,19 @@ export default function MePanel({ onClose }) {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </motion.section>
+        </div>
 
-          {/* AI highlight banner */}
-          <motion.div className="me-ai" variants={item}>
-            <Icon icon="solar:magic-stick-3-bold-duotone" className="me-ai__icon" />
-            <div>
-              <strong>AI-Assisted Engineering</strong>
-              <span>Boosting productivity & code quality with modern AI tooling.</span>
-            </div>
-            <Icon icon="solar:arrow-right-up-bold-duotone" className="me-ai__go" />
-          </motion.div>
+        {/* ============ AI HIGHLIGHT ============ */}
+        <motion.div className="me-ai" variants={item}>
+          <Icon icon="solar:magic-stick-3-bold-duotone" className="me-ai__icon" />
+          <div>
+            <strong>AI-Assisted Engineering</strong>
+            <span>Boosting productivity &amp; code quality with modern AI tooling.</span>
+          </div>
+          <Icon icon="solar:arrow-right-up-bold-duotone" className="me-ai__go" />
         </motion.div>
+      </div>
     </motion.div>
   )
 }

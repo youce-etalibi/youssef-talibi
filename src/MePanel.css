@@ -1,83 +1,92 @@
 /* ============================================================
-   Inline glass card — sits in the same centre spot as the hero
+   Full-bleed "About me" page — reads like a real document/landing
+   section, NOT a floating modal card. Edge-to-edge, page scroll.
    ============================================================ */
-.me-card {
-  position: relative;
+.me-page {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   pointer-events: auto;
-  width: min(920px, 100%);
-  max-height: min(86vh, 720px);
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(0, 300px) 1fr;
-  gap: 0;
-  border-radius: 30px;
-  background: linear-gradient(
-    160deg,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.5) 100%
-  );
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  backdrop-filter: blur(30px) saturate(180%);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-    0 40px 90px rgba(40, 30, 90, 0.22);
+  overflow-y: auto;
+  overflow-x: hidden;
   font-family: 'Poppins', system-ui, sans-serif;
   color: #2b2740;
+  text-align: left;
+  /* faint page wash so content sits on a real surface, not a card */
+  background:
+    radial-gradient(120% 80% at 85% -10%, rgba(106, 92, 255, 0.12), transparent 60%),
+    radial-gradient(90% 70% at -10% 110%, rgba(255, 92, 157, 0.1), transparent 60%);
+}
+.me-page::-webkit-scrollbar { width: 10px; }
+.me-page::-webkit-scrollbar-thumb {
+  background: rgba(120, 100, 255, 0.32);
+  border-radius: 999px;
 }
 
-/* Back button — glass pill, matches the nav */
+/* wide reading column, generous side gutters — spans the page */
+.me-shell {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(84px, 11vh, 120px) clamp(22px, 6vw, 80px) clamp(56px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Back button — floating text pill in the corner */
 .me-back {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 5;
+  position: fixed;
+  top: clamp(18px, 3vh, 28px);
+  left: clamp(18px, 4vw, 40px);
+  z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 8px 15px 8px 11px;
+  gap: 6px;
+  padding: 9px 17px 9px 12px;
   border: none;
   cursor: pointer;
   border-radius: 999px;
   font-family: 'Poppins', system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: #2b2740;
-  background: rgba(255, 255, 255, 0.6);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
-  backdrop-filter: blur(14px) saturate(180%);
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
   box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
     inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-    0 6px 16px rgba(70, 55, 120, 0.16);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    0 8px 20px rgba(70, 55, 120, 0.16);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .me-back svg { font-size: 1.2rem; transition: transform 0.3s ease; }
-.me-back:hover { transform: translateX(-2px) scale(1.04); }
+.me-back:hover { transform: translateX(-2px); }
 .me-back:hover svg { transform: translateX(-3px); }
 
 /* ============================================================
-   Photo column
+   HERO — open layout, no card. Photo + identity side by side.
    ============================================================ */
+.me-hero {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  padding-bottom: clamp(28px, 4vh, 48px);
+}
+
+/* ---- Photo (only framed element — it's a portrait) ---- */
 .me-photo {
-  position: relative;
-  padding: 26px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  background: linear-gradient(
-    170deg,
-    rgba(106, 92, 255, 0.14),
-    rgba(255, 92, 157, 0.1)
-  );
+  align-items: flex-start;
 }
-
 .me-photo__ring {
   position: relative;
-  border-radius: 24px;
-  padding: 4px;
+  width: 100%;
+  border-radius: 28px;
+  padding: 5px;
   background: linear-gradient(135deg, #6a5cff, #ff5c9d 55%, #ff9a5c);
-  box-shadow: 0 20px 44px rgba(90, 60, 160, 0.32);
+  box-shadow: 0 30px 60px rgba(90, 60, 160, 0.3);
   overflow: hidden;
 }
 .me-photo__ring img {
@@ -85,77 +94,56 @@
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: 23px;
 }
 .me-photo__shine {
   position: absolute;
-  inset: 4px;
-  border-radius: 20px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0) 38%
-  );
+  inset: 5px;
+  border-radius: 23px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 38%);
   pointer-events: none;
 }
-
-.me-photo__flag,
-.me-photo__status {
+.me-photo__flag {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  align-self: flex-start;
-  padding: 7px 14px;
+  padding: 8px 15px;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.72);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 6px 16px rgba(70, 55, 120, 0.14);
-}
-.me-photo__status {
-  color: #1f9d55;
-}
-.me-photo__dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
-  animation: pulse 1.8s infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
-  70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 6px 16px rgba(70, 55, 120, 0.12);
 }
 
-/* ============================================================
-   Content column
-   ============================================================ */
-.me-content {
-  padding: 30px 30px 30px 26px;
-  overflow-y: auto;
+/* ---- Identity ---- */
+.me-intro {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
-.me-content::-webkit-scrollbar { width: 8px; }
-.me-content::-webkit-scrollbar-thumb {
-  background: rgba(120, 100, 255, 0.3);
-  border-radius: 999px;
+.me-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6a5cff;
 }
+.me-eyebrow svg { font-size: 1.05rem; }
 
 .me-name {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  gap: 12px;
+  font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
   background: linear-gradient(120deg, #6a5cff, #ff5c9d 60%, #ff9a5c);
   -webkit-background-clip: text;
   background-clip: text;
@@ -163,7 +151,7 @@
   -webkit-text-fill-color: transparent;
 }
 .me-verified {
-  font-size: 1.3rem;
+  font-size: 1.7rem;
   color: #2f9bff;
   -webkit-text-fill-color: #2f9bff;
   filter: drop-shadow(0 2px 5px rgba(47, 155, 255, 0.4));
@@ -171,13 +159,12 @@
 .me-role {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
+  gap: 9px;
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: #55506e;
 }
-.me-role svg { font-size: 1.15rem; color: #6a5cff; }
+.me-role svg { font-size: 1.25rem; color: #6a5cff; }
 .me-dot-sep {
   width: 4px;
   height: 4px;
@@ -186,108 +173,104 @@
   opacity: 0.4;
 }
 
-/* ---- Stat tiles ---- */
+.me-bio {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: #4a4563;
+  max-width: 58ch;
+  margin-top: 2px;
+}
+.me-bio strong { color: #6a5cff; font-weight: 600; }
+
+/* ---- Stat row — underlined figures, no boxes ---- */
 .me-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 4vw, 48px);
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(120, 100, 255, 0.16);
 }
 .me-stat {
   position: relative;
-  padding: 14px 12px;
-  border-radius: 18px;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 8px 20px rgba(70, 55, 120, 0.1);
-  overflow: hidden;
-}
-.me-stat::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(80% 60% at 50% 0%, var(--accent), transparent 70%);
-  opacity: 0.14;
+  display: flex;
+  flex-direction: column;
 }
 .me-stat__icon {
   font-size: 1.5rem;
   color: var(--accent);
-  position: relative;
+  margin-bottom: 4px;
 }
 .me-stat__value {
-  font-size: 1.7rem;
+  font-size: clamp(2rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1;
-  margin-top: 4px;
   color: var(--accent);
-  position: relative;
 }
 .me-stat__label {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: #6b6685;
-  margin-top: 3px;
-  position: relative;
+  margin-top: 4px;
 }
 
-/* ---- Bio ---- */
-.me-bio {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #4a4563;
+/* ============================================================
+   SECTIONS — full-width bands separated by dividers, not cards
+   ============================================================ */
+.me-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(32px, 5vw, 72px);
+  padding: clamp(30px, 5vh, 52px) 0;
+  border-top: 1px solid rgba(120, 100, 255, 0.16);
 }
-.me-bio strong {
-  color: #6a5cff;
-  font-weight: 600;
-}
-
-/* ---- Sections ---- */
-.me-section__title {
+.me-block__title {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 0.78rem;
-  font-weight: 600;
+  gap: 9px;
+  font-size: 0.82rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.16em;
   color: #857fa3;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
 }
-.me-section__title svg { font-size: 1.1rem; color: #6a5cff; }
+.me-block__title svg { font-size: 1.3rem; color: #6a5cff; }
 
-/* ---- Education shield badges (American / shields.io style) ---- */
+/* ---- Education shields ---- */
 .me-badges {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .me-shield {
   display: flex;
   align-items: stretch;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 6px 16px rgba(70, 55, 120, 0.12);
+  box-shadow: 0 10px 24px rgba(70, 55, 120, 0.14);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.me-shield:hover { transform: translateX(4px); }
 .me-shield__key {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 14px;
+  padding: 13px 17px;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.94rem;
   color: #fff;
   background: #2b2740;
 }
-.me-shield__key svg { font-size: 1.1rem; }
+.me-shield__key svg { font-size: 1.2rem; }
 .me-shield__val {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px 16px;
+  padding: 11px 19px;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.97rem;
   color: #fff;
   background: var(--accent);
   flex: 1;
@@ -295,57 +278,56 @@
 .me-shield__val em {
   font-style: normal;
   font-weight: 500;
-  font-size: 0.72rem;
-  opacity: 0.85;
+  font-size: 0.75rem;
+  opacity: 0.88;
 }
 
 /* ---- Skill tags ---- */
 .me-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 .me-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 13px;
+  gap: 7px;
+  padding: 10px 16px;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 500;
   color: #3a3556;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow:
-    inset 0 0 0 1px rgba(120, 100, 255, 0.22),
-    0 4px 12px rgba(70, 55, 120, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.22);
   transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
 }
-.me-tag svg { font-size: 1.05rem; color: #6a5cff; }
+.me-tag svg { font-size: 1.12rem; color: #6a5cff; }
 .me-tag:hover {
   transform: translateY(-2px);
   color: #6a5cff;
-  box-shadow:
-    inset 0 0 0 1px rgba(120, 100, 255, 0.5),
-    0 8px 18px rgba(106, 92, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.55), 0 8px 18px rgba(106, 92, 255, 0.18);
 }
 
-/* ---- AI highlight banner ---- */
+/* ============================================================
+   AI highlight — the one deliberate colored band
+   ============================================================ */
 .me-ai {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
-  border-radius: 18px;
+  gap: 18px;
+  padding: 24px 28px;
+  border-radius: 24px;
   color: #fff;
   background: linear-gradient(120deg, #6a5cff, #a24bff 55%, #ff5c9d);
-  box-shadow: 0 16px 34px rgba(120, 70, 220, 0.3);
+  box-shadow: 0 26px 54px rgba(120, 70, 220, 0.28);
+  margin-top: clamp(8px, 2vh, 20px);
 }
-.me-ai__icon { font-size: 2rem; flex-shrink: 0; }
+.me-ai__icon { font-size: 2.4rem; flex-shrink: 0; }
 .me-ai div { display: flex; flex-direction: column; flex: 1; }
-.me-ai strong { font-size: 0.98rem; }
-.me-ai span { font-size: 0.8rem; opacity: 0.9; }
+.me-ai strong { font-size: 1.1rem; }
+.me-ai span { font-size: 0.88rem; opacity: 0.9; }
 .me-ai__go {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   opacity: 0.85;
   transition: transform 0.3s ease;
 }
@@ -354,19 +336,17 @@
 /* ============================================================
    Responsive
    ============================================================ */
-@media (max-width: 720px) {
-  .me-card {
+@media (max-width: 780px) {
+  .me-hero {
     grid-template-columns: 1fr;
-    max-height: 92vh;
+    gap: 26px;
   }
   .me-photo {
-    flex-direction: row;
-    flex-wrap: wrap;
+    max-width: 280px;
+    margin: 0 auto;
     align-items: center;
   }
-  .me-photo__ring {
-    width: 120px;
-    flex-shrink: 0;
-  }
-  .me-content { padding: 22px; }
+}
+@media (max-width: 480px) {
+  .me-stats { gap: 20px; }
 }
