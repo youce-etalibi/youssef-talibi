@@ -1,0 +1,150 @@
+/* ============================================================
+   Contact — liquid-glass link cards. iOS 26 style.
+   ============================================================ */
+.ct-page {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(74px, 11vh, 120px) clamp(18px, 5vw, 48px) clamp(48px, 8vh, 90px);
+  font-family: 'Poppins', system-ui, sans-serif;
+  color: #2b2740;
+  text-align: center;
+}
+.ct-page::-webkit-scrollbar { width: 8px; }
+.ct-page::-webkit-scrollbar-thumb {
+  background: rgba(120, 100, 255, 0.28);
+  border-radius: 999px;
+}
+
+/* Back button — floating glass pill */
+.ct-back {
+  position: fixed;
+  top: clamp(16px, 3vh, 26px);
+  left: clamp(16px, 4vw, 36px);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px 9px 11px;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2b2740;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 6px 18px rgba(70, 55, 120, 0.14);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ct-back svg { font-size: 1.15rem; transition: transform 0.3s ease; }
+.ct-back:hover { transform: translateX(-2px); }
+.ct-back:hover svg { transform: translateX(-3px); }
+
+/* ---- Heading ---- */
+.ct-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: linear-gradient(120deg, #6a5cff, #ff5c9d 60%, #ff9a5c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.ct-sub {
+  margin-top: 8px;
+  margin-bottom: clamp(28px, 4.5vh, 44px);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b6685;
+}
+
+/* ---- Link cards ---- */
+.ct-list {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ct-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 22px;
+  text-decoration: none;
+  text-align: left;
+  color: #2b2740;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85),
+    0 10px 26px rgba(70, 55, 120, 0.14);
+  transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ct-card:hover {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    0 18px 38px color-mix(in srgb, var(--accent) 26%, transparent);
+}
+.ct-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+.ct-card__icon svg { width: 26px; height: 26px; object-fit: contain; }
+.ct-card__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.ct-card__text strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.ct-card__text em {
+  font-style: normal;
+  font-size: 0.82rem;
+  color: #6b6685;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ct-card__go {
+  font-size: 1.3rem;
+  color: #9a95b5;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.ct-card:hover .ct-card__go {
+  transform: translate(2px, -2px);
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .ct-card { padding: 14px 16px; border-radius: 18px; }
+  .ct-card__icon { width: 42px; height: 42px; }
+}

@@ -1,0 +1,282 @@
+/* ============================================================
+   Experience — animated liquid-glass timeline. iOS 26 style.
+   ============================================================ */
+.xp-page {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(74px, 11vh, 120px) clamp(18px, 5vw, 48px) clamp(48px, 8vh, 90px);
+  font-family: 'Poppins', system-ui, sans-serif;
+  color: #2b2740;
+  text-align: center;
+}
+.xp-page::-webkit-scrollbar { width: 8px; }
+.xp-page::-webkit-scrollbar-thumb {
+  background: rgba(120, 100, 255, 0.28);
+  border-radius: 999px;
+}
+
+/* Back button — floating glass pill */
+.xp-back {
+  position: fixed;
+  top: clamp(16px, 3vh, 26px);
+  left: clamp(16px, 4vw, 36px);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px 9px 11px;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2b2740;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 6px 18px rgba(70, 55, 120, 0.14);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.xp-back svg { font-size: 1.15rem; transition: transform 0.3s ease; }
+.xp-back:hover { transform: translateX(-2px); }
+.xp-back:hover svg { transform: translateX(-3px); }
+
+/* ---- Heading ---- */
+.xp-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: linear-gradient(120deg, #6a5cff, #ff5c9d 60%, #ff9a5c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.xp-sub {
+  margin-top: 8px;
+  margin-bottom: clamp(30px, 5vh, 52px);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b6685;
+}
+
+/* ============================================================
+   Timeline
+   ============================================================ */
+.xp-track {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(26px, 4vh, 44px);
+}
+
+/* the vertical drawn line — runs through the node centres (left 28px) */
+.xp-line {
+  position: absolute;
+  left: 28px;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  transform: translateX(-50%);
+  transform-origin: top center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6a5cff, #ff5c9d 55%, #ff9a5c);
+  box-shadow: 0 0 16px rgba(120, 100, 255, 0.35);
+}
+
+.xp-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: clamp(14px, 2.5vw, 24px);
+  align-items: start;
+}
+
+/* ---- Logo node ---- */
+.xp-node {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  z-index: 1;
+}
+.xp-node__badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    0 10px 24px rgba(70, 55, 120, 0.22);
+}
+.xp-node__badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/* pulsing halo for the current role */
+.xp-node__pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  animation: xp-pulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes xp-pulse {
+  0%   { transform: scale(1);    opacity: 0.7; }
+  70%  { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+/* ---- Card ---- */
+.xp-card {
+  padding: clamp(18px, 2.4vw, 26px);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.52);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85),
+    0 16px 38px rgba(70, 55, 120, 0.16);
+}
+.xp-card__head h3 {
+  font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+  font-weight: 700;
+  color: #2b2740;
+  line-height: 1.2;
+}
+.xp-company {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+}
+.xp-company__name {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--accent);
+}
+.xp-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #55506e;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.22);
+}
+.xp-chip--live {
+  color: #159a5b;
+  background: rgba(46, 204, 113, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(46, 204, 113, 0.35);
+}
+
+.xp-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0 4px;
+}
+.xp-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.84rem;
+  color: #55506e;
+}
+.xp-meta svg { font-size: 1.1rem; color: var(--accent); flex-shrink: 0; }
+.xp-meta em { font-style: normal; color: #8a85a3; }
+
+.xp-intro {
+  margin-top: 14px;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #4a4563;
+}
+
+.xp-points {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.xp-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #4a4563;
+}
+.xp-points__icon {
+  font-size: 1.15rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.xp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 32%, transparent);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+}
+.xp-link svg { font-size: 1.15rem; }
+.xp-link:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 10px 22px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+.xp-link__go { transition: transform 0.28s ease; }
+.xp-link:hover .xp-link__go { transform: translate(2px, -2px); }
+
+.xp-outro {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(120, 100, 255, 0.14);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: #6b6685;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 520px) {
+  .xp-item { grid-template-columns: 46px 1fr; gap: 12px; }
+  .xp-node, .xp-node__badge { width: 46px; height: 46px; }
+  .xp-line { left: 23px; }
+  .xp-card { border-radius: 20px; }
+}

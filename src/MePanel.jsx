@@ -10,8 +10,8 @@ import MoroccoFlag from './MoroccoFlag.jsx'
 import './MePanel.css'
 
 /* ---- Live, self-updating facts ---------------------------------------- */
-const BIRTH_YEAR = 2004
-const CAREER_START_YEAR = 2023 // "more than 2 years of experience"
+const BIRTH_YEAR = 2005
+const CAREER_START_YEAR = 2024 // "more than 2 years of experience"
 
 const currentYear = new Date().getFullYear()
 const AGE = currentYear - BIRTH_YEAR
@@ -20,30 +20,25 @@ const YEARS_EXP = currentYear - CAREER_START_YEAR
 /* ---- Content ----------------------------------------------------------- */
 const EDUCATION = [
   {
-    tag: 'DTS',
     value: 'Digital Development',
-    sub: 'Higher Technician Diploma · Morocco',
+    sub: 'Higher Technician Diploma (DTS) · Morocco - Tangier',
     icon: 'solar:diploma-bold-duotone',
-    accent: '#6a5cff',
   },
   {
-    tag: 'BSc',
     value: 'Computer Engineering',
-    sub: 'High Tech Moroccan School',
+    sub: 'BSc · High Tech Moroccan School · Morocco - Rabat',
     icon: 'solar:square-academic-cap-2-bold-duotone',
-    accent: '#ff5c9d',
   },
 ]
 
 const SKILLS = [
-  { label: 'Web Apps', icon: 'solar:code-square-bold-duotone' },
-  { label: 'Problem Solving', icon: 'solar:lightbulb-bolt-bold-duotone' },
-  { label: 'Clean Code', icon: 'solar:broom-bold-duotone' },
-  { label: 'AI-Assisted Dev', icon: 'solar:magic-stick-3-bold-duotone' },
   { label: 'React', icon: 'solar:atom-bold-duotone' },
   { label: 'JavaScript', icon: 'solar:programming-bold-duotone' },
-  { label: 'Fast Delivery', icon: 'solar:rocket-2-bold-duotone' },
-  { label: 'Always Learning', icon: 'solar:book-bookmark-bold-duotone' },
+  { label: 'Web Apps', icon: 'solar:code-square-bold-duotone' },
+  { label: 'Clean Code', icon: 'solar:broom-bold-duotone' },
+  { label: 'AI-Assisted Dev', icon: 'solar:magic-stick-3-bold-duotone' },
+  { label: 'Problem Solving', icon: 'solar:lightbulb-bolt-bold-duotone' },
+  { label: 'More ...', icon: 'solar:lightbulb-bolt-bold-duotone' },
 ]
 
 /* ---- Count-up number --------------------------------------------------- */
@@ -75,8 +70,8 @@ const page = {
     transition: {
       duration: 0.5,
       ease: [0.22, 1, 0.36, 1],
-      staggerChildren: 0.07,
-      delayChildren: 0.12,
+      staggerChildren: 0.06,
+      delayChildren: 0.1,
     },
   },
   exit: {
@@ -87,7 +82,7 @@ const page = {
 }
 
 const item = {
-  hidden: { opacity: 0, y: 22, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 18, filter: 'blur(6px)' },
   show: {
     opacity: 1,
     y: 0,
@@ -104,9 +99,9 @@ export default function MePanel({ onClose }) {
   }, [onClose])
 
   const stats = [
-    { value: <Counter to={AGE} />, label: 'Years old', icon: 'solar:cake-bold-duotone', accent: '#ff9a5c' },
-    { value: <><Counter to={YEARS_EXP} />+</>, label: 'Years exp.', icon: 'solar:medal-ribbons-star-bold-duotone', accent: '#6a5cff' },
-    { value: <Counter to={EDUCATION.length} />, label: 'Degrees', icon: 'solar:square-academic-cap-bold-duotone', accent: '#ff5c9d' },
+    { value: <Counter to={AGE} />, label: 'Years old' },
+    { value: <><Counter to={YEARS_EXP} />+</>, label: 'Years exp.' },
+    { value: <Counter to={EDUCATION.length} />, label: 'Degrees' },
   ]
 
   return (
@@ -124,110 +119,73 @@ export default function MePanel({ onClose }) {
         <span>Back</span>
       </button>
 
-      <div className="me-shell">
-        {/* ============ HERO BAND ============ */}
-        <motion.header className="me-hero" variants={item}>
-          {/* framed photo */}
-          <div className="me-photo">
-            <div className="me-photo__ring">
+      <div className="me-card">
+        {/* ===== LEFT — identity ===== */}
+        <div className="me-col me-col--left">
+          <motion.div className="me-top" variants={item}>
+            <div className="me-avatar">
               <img src="/img.jpg" alt="Youssef Talibi" />
-              <div className="me-photo__shine" aria-hidden="true" />
             </div>
-            <div className="me-photo__flag">
-              <MoroccoFlag size={22} />
-              <span>Morocco</span>
-            </div>
-          </div>
-
-          {/* identity + bio + stats */}
-          <div className="me-intro">
-            <span className="me-eyebrow">
-              <Icon icon="solar:hand-shake-bold-duotone" />
-              About me
-            </span>
-
             <h2 className="me-name">
               Youssef Talibi
               <Icon icon="solar:verified-check-bold" className="me-verified" />
             </h2>
-
             <div className="me-role">
               <Icon icon="solar:code-2-bold-duotone" />
               Software Developer
-              <span className="me-dot-sep" />
-              <MoroccoFlag size={16} />
+              <span className="me-dot" />
+              <MoroccoFlag size={15} />
               Morocco
             </div>
+          </motion.div>
 
-            <p className="me-bio">
-              I'm a Software Developer from Morocco who loves turning ideas into
-              clean, efficient web applications. I enjoy solving problems and I
-              lean on <strong>AI-assisted programming</strong> to ship better
-              software, faster — while never stopping learning.
-            </p>
+          <motion.p className="me-bio" variants={item}>
+            I'm a Software Developer from Morocco who loves turning ideas into
+            clean, efficient web apps. I lean on{' '}
+            <strong>AI-assisted programming</strong> to ship better software,
+            faster — while always learning.
+          </motion.p>
 
-            <div className="me-stats">
-              {stats.map((s, i) => (
-                <div className="me-stat" key={i} style={{ '--accent': s.accent }}>
-                  <Icon icon={s.icon} className="me-stat__icon" />
-                  <div className="me-stat__value">{s.value}</div>
-                  <div className="me-stat__label">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.header>
+          <motion.div className="me-stats" variants={item}>
+            {stats.map((s, i) => (
+              <div className="me-stat" key={i}>
+                <span className="me-stat__value">{s.value}</span>
+                <span className="me-stat__label">{s.label}</span>
+              </div>
+            ))}
+          </motion.div>
 
-        {/* ============ ORGANIZED GRID ============ */}
-        <div className="me-grid">
-          {/* Education */}
-          <motion.section className="me-block" variants={item}>
-            <div className="me-block__title">
-              <Icon icon="solar:square-academic-cap-2-bold-duotone" />
-              Education
-            </div>
-            <div className="me-badges">
-              {EDUCATION.map((e) => (
-                <div className="me-shield" key={e.tag} style={{ '--accent': e.accent }}>
-                  <span className="me-shield__key">
-                    <Icon icon={e.icon} />
-                    {e.tag}
-                  </span>
-                  <span className="me-shield__val">
-                    {e.value}
-                    <em>{e.sub}</em>
-                  </span>
-                </div>
-              ))}
-            </div>
-          </motion.section>
+        </div>
 
-          {/* Skills */}
-          <motion.section className="me-block" variants={item}>
-            <div className="me-block__title">
-              <Icon icon="solar:star-shine-bold-duotone" />
-              What I do
-            </div>
-            <div className="me-tags">
+        {/* ===== RIGHT — skills + education ===== */}
+        <div className="me-col me-col--right">
+          <motion.div className="me-section" variants={item}>
+            <span className="me-label">Skills</span>
+            <div className="me-chips">
               {SKILLS.map((s) => (
-                <span className="me-tag" key={s.label}>
+                <span className="me-chip" key={s.label}>
                   <Icon icon={s.icon} />
                   {s.label}
                 </span>
               ))}
             </div>
-          </motion.section>
-        </div>
+          </motion.div>
 
-        {/* ============ AI HIGHLIGHT ============ */}
-        <motion.div className="me-ai" variants={item}>
-          <Icon icon="solar:magic-stick-3-bold-duotone" className="me-ai__icon" />
-          <div>
-            <strong>AI-Assisted Engineering</strong>
-            <span>Boosting productivity &amp; code quality with modern AI tooling.</span>
-          </div>
-          <Icon icon="solar:arrow-right-up-bold-duotone" className="me-ai__go" />
-        </motion.div>
+          <motion.div className="me-section" variants={item}>
+            <span className="me-label">Education</span>
+            <div className="me-edu">
+              {EDUCATION.map((e) => (
+                <div className="me-edu__row" key={e.value}>
+                  <Icon icon={e.icon} className="me-edu__icon" />
+                  <div>
+                    <strong>{e.value}</strong>
+                    <em>{e.sub}</em>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   )

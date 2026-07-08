@@ -3,6 +3,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import FluidCursor from './FluidCursor.jsx'
 import MePanel from './MePanel.jsx'
+import SkillsPanel from './SkillsPanel.jsx'
+import ContactPanel from './ContactPanel.jsx'
+import ExperiencePanel from './ExperiencePanel.jsx'
+import ProjectsPanel from './ProjectsPanel.jsx'
 import './App.css'
 
 /* Avatar images cycled in an infinite crossfade loop */
@@ -78,6 +82,14 @@ export default function App() {
         <AnimatePresence mode="wait">
           {openSection === 'Me' ? (
             <MePanel key="me" onClose={() => setOpenSection(null)} />
+          ) : openSection === 'Skills' ? (
+            <SkillsPanel key="skills" onClose={() => setOpenSection(null)} />
+          ) : openSection === 'Contact' ? (
+            <ContactPanel key="contact" onClose={() => setOpenSection(null)} />
+          ) : openSection === 'Experience' ? (
+            <ExperiencePanel key="experience" onClose={() => setOpenSection(null)} />
+          ) : openSection === 'Projects' ? (
+            <ProjectsPanel key="projects" onClose={() => setOpenSection(null)} />
           ) : (
             <motion.div
               key="hero"
@@ -89,7 +101,9 @@ export default function App() {
             >
               <header className="greeting">
                 <h1 className="greeting__hello">Hello</h1>
-                <p className="greeting__welcome">Welcome to my world</p>
+                <p className="greeting__welcome">
+                  Welcome — I'm <strong>Youssef Talibi</strong>
+                </p>
               </header>
 
               <LoopingAvatar />

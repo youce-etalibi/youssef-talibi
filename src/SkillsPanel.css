@@ -1,0 +1,128 @@
+/* ============================================================
+   Skills / Tech Stack — grid of liquid-glass tiles. iOS 26 style.
+   ============================================================ */
+.sk-page {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(74px, 11vh, 120px) clamp(18px, 5vw, 48px) clamp(48px, 8vh, 90px);
+  font-family: 'Poppins', system-ui, sans-serif;
+  color: #2b2740;
+  text-align: center;
+}
+.sk-page::-webkit-scrollbar { width: 8px; }
+.sk-page::-webkit-scrollbar-thumb {
+  background: rgba(120, 100, 255, 0.28);
+  border-radius: 999px;
+}
+
+/* Back button — floating glass pill */
+.sk-back {
+  position: fixed;
+  top: clamp(16px, 3vh, 26px);
+  left: clamp(16px, 4vw, 36px);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px 9px 11px;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2b2740;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 6px 18px rgba(70, 55, 120, 0.14);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sk-back svg { font-size: 1.15rem; transition: transform 0.3s ease; }
+.sk-back:hover { transform: translateX(-2px); }
+.sk-back:hover svg { transform: translateX(-3px); }
+
+/* ---- Heading ---- */
+.sk-title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: linear-gradient(120deg, #6a5cff, #ff5c9d 60%, #ff9a5c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.sk-sub {
+  margin-top: 8px;
+  margin-bottom: clamp(26px, 4vh, 40px);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b6685;
+}
+
+/* ---- Grid of glass tiles ---- */
+.sk-grid {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: clamp(10px, 1.4vw, 16px);
+}
+.sk-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  aspect-ratio: 1 / 1;
+  padding: 10px 6px;
+  border-radius: 22px;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85),
+    0 8px 20px rgba(70, 55, 120, 0.12);
+  transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sk-tile:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(120, 100, 255, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    0 18px 36px rgba(106, 92, 255, 0.3);
+}
+.sk-tile__icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  /* keep every logo inside the same square box (preserves aspect ratio) */
+  object-fit: contain;
+  filter: drop-shadow(0 3px 7px rgba(70, 55, 120, 0.2));
+}
+.sk-tile__label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #4a4563;
+  line-height: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .sk-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .sk-tile { border-radius: 18px; }
+  .sk-tile__icon { width: 1.9rem; height: 1.9rem; }
+}

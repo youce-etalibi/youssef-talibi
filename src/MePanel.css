@@ -1,6 +1,6 @@
 /* ============================================================
-   Full-bleed "About me" page — reads like a real document/landing
-   section, NOT a floating modal card. Edge-to-edge, page scroll.
+   "About me" — one calm liquid-glass card. iOS 26 style:
+   frosted surfaces, soft borders, gentle depth. Nothing loud.
    ============================================================ */
 .me-page {
   position: absolute;
@@ -9,163 +9,132 @@
   pointer-events: auto;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(70px, 10vh, 110px) clamp(18px, 5vw, 40px) clamp(40px, 7vh, 80px);
   font-family: 'Poppins', system-ui, sans-serif;
   color: #2b2740;
-  text-align: left;
-  /* faint page wash so content sits on a real surface, not a card */
-  background:
-    radial-gradient(120% 80% at 85% -10%, rgba(106, 92, 255, 0.12), transparent 60%),
-    radial-gradient(90% 70% at -10% 110%, rgba(255, 92, 157, 0.1), transparent 60%);
 }
-.me-page::-webkit-scrollbar { width: 10px; }
+.me-page::-webkit-scrollbar { width: 8px; }
 .me-page::-webkit-scrollbar-thumb {
-  background: rgba(120, 100, 255, 0.32);
+  background: rgba(120, 100, 255, 0.28);
   border-radius: 999px;
 }
 
-/* wide reading column, generous side gutters — spans the page */
-.me-shell {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: clamp(84px, 11vh, 120px) clamp(22px, 6vw, 80px) clamp(56px, 8vh, 96px);
-  display: flex;
-  flex-direction: column;
-}
-
-/* Back button — floating text pill in the corner */
+/* Back button — floating glass pill */
 .me-back {
   position: fixed;
-  top: clamp(18px, 3vh, 28px);
-  left: clamp(18px, 4vw, 40px);
+  top: clamp(16px, 3vh, 26px);
+  left: clamp(16px, 4vw, 36px);
   z-index: 10;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 17px 9px 12px;
+  padding: 9px 16px 9px 11px;
   border: none;
   cursor: pointer;
   border-radius: 999px;
-  font-family: 'Poppins', system-ui, sans-serif;
+  font-family: inherit;
   font-weight: 600;
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   color: #2b2740;
-  background: rgba(255, 255, 255, 0.62);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-    0 8px 20px rgba(70, 55, 120, 0.16);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 6px 18px rgba(70, 55, 120, 0.14);
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.me-back svg { font-size: 1.2rem; transition: transform 0.3s ease; }
+.me-back svg { font-size: 1.15rem; transition: transform 0.3s ease; }
 .me-back:hover { transform: translateX(-2px); }
 .me-back:hover svg { transform: translateX(-3px); }
 
 /* ============================================================
-   HERO — open layout, no card. Photo + identity side by side.
+   The single glass card
    ============================================================ */
-.me-hero {
+.me-card {
+  width: 100%;
+  max-width: 1040px;
   display: grid;
-  grid-template-columns: minmax(220px, 300px) 1fr;
-  gap: clamp(28px, 5vw, 64px);
-  align-items: center;
-  padding-bottom: clamp(28px, 4vh, 48px);
+  grid-template-columns: minmax(280px, 400px) 1fr;
+  align-items: stretch;
+  gap: clamp(28px, 4vw, 52px);
+  padding: clamp(30px, 3.5vw, 52px);
+  border-radius: 36px;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    0 30px 70px rgba(70, 55, 120, 0.18);
 }
 
-/* ---- Photo (only framed element — it's a portrait) ---- */
-.me-photo {
+/* ---- Columns ---- */
+.me-col {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  align-items: flex-start;
+  gap: clamp(20px, 3vh, 28px);
 }
-.me-photo__ring {
-  position: relative;
-  width: 100%;
-  border-radius: 28px;
-  padding: 5px;
-  background: linear-gradient(135deg, #6a5cff, #ff5c9d 55%, #ff9a5c);
-  box-shadow: 0 30px 60px rgba(90, 60, 160, 0.3);
-  overflow: hidden;
-}
-.me-photo__ring img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 23px;
-}
-.me-photo__shine {
-  position: absolute;
-  inset: 5px;
-  border-radius: 23px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 38%);
-  pointer-events: none;
-}
-.me-photo__flag {
-  display: inline-flex;
+.me-col--left {
+  text-align: center;
   align-items: center;
-  gap: 8px;
-  padding: 8px 15px;
-  border-radius: 999px;
-  font-size: 0.84rem;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 6px 16px rgba(70, 55, 120, 0.12);
+  justify-content: center;
+}
+.me-col--right {
+  justify-content: center;
+  padding-left: clamp(28px, 4vw, 52px);
+  border-left: 1px solid rgba(120, 100, 255, 0.16);
 }
 
 /* ---- Identity ---- */
-.me-intro {
+.me-top {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 14px;
 }
-.me-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  align-self: flex-start;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #6a5cff;
+.me-avatar {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #6a5cff, #ff5c9d 60%, #ff9a5c);
+  box-shadow: 0 14px 30px rgba(90, 60, 160, 0.28);
 }
-.me-eyebrow svg { font-size: 1.05rem; }
-
+.me-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+}
 .me-name {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  gap: 9px;
+  font-size: clamp(1.7rem, 5vw, 2.15rem);
   font-weight: 700;
-  line-height: 1.02;
   letter-spacing: -0.01em;
-  background: linear-gradient(120deg, #6a5cff, #ff5c9d 60%, #ff9a5c);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: #2b2740;
 }
 .me-verified {
-  font-size: 1.7rem;
+  font-size: 1.25rem;
   color: #2f9bff;
-  -webkit-text-fill-color: #2f9bff;
-  filter: drop-shadow(0 2px 5px rgba(47, 155, 255, 0.4));
+  filter: drop-shadow(0 2px 4px rgba(47, 155, 255, 0.35));
 }
 .me-role {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   font-weight: 500;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   color: #55506e;
 }
-.me-role svg { font-size: 1.25rem; color: #6a5cff; }
-.me-dot-sep {
+.me-role svg { font-size: 1.15rem; color: #6a5cff; }
+.me-dot {
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -173,180 +142,133 @@
   opacity: 0.4;
 }
 
+/* ---- Bio ---- */
 .me-bio {
-  font-size: 1.08rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.65;
   color: #4a4563;
-  max-width: 58ch;
-  margin-top: 2px;
 }
 .me-bio strong { color: #6a5cff; font-weight: 600; }
 
-/* ---- Stat row — underlined figures, no boxes ---- */
+/* ---- Stats ---- */
 .me-stats {
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(24px, 4vw, 48px);
-  margin-top: 10px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(120, 100, 255, 0.16);
+  justify-content: center;
+  gap: clamp(10px, 2.5vw, 16px);
+  width: 100%;
 }
 .me-stat {
-  position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
-}
-.me-stat__icon {
-  font-size: 1.5rem;
-  color: var(--accent);
-  margin-bottom: 4px;
+  gap: 3px;
+  padding: 14px 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .me-stat__value {
-  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
   font-weight: 700;
   line-height: 1;
-  color: var(--accent);
+  color: #6a5cff;
 }
 .me-stat__label {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: #6b6685;
-  margin-top: 4px;
 }
 
-/* ============================================================
-   SECTIONS — full-width bands separated by dividers, not cards
-   ============================================================ */
-.me-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: clamp(32px, 5vw, 72px);
-  padding: clamp(30px, 5vh, 52px) 0;
-  border-top: 1px solid rgba(120, 100, 255, 0.16);
-}
-.me-block__title {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: #857fa3;
-  margin-bottom: 18px;
-}
-.me-block__title svg { font-size: 1.3rem; color: #6a5cff; }
-
-/* ---- Education shields ---- */
-.me-badges {
+/* ---- Shared section label ---- */
+.me-section {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  text-align: left;
 }
-.me-shield {
+.me-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #857fa3;
+}
+
+/* ---- Skill chips ---- */
+.me-chips {
   display: flex;
-  align-items: stretch;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 10px 24px rgba(70, 55, 120, 0.14);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-wrap: wrap;
+  gap: 8px;
 }
-.me-shield:hover { transform: translateX(4px); }
-.me-shield__key {
+.me-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 13px 17px;
-  font-weight: 700;
-  font-size: 0.94rem;
-  color: #fff;
-  background: #2b2740;
-}
-.me-shield__key svg { font-size: 1.2rem; }
-.me-shield__val {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 11px 19px;
-  font-weight: 600;
-  font-size: 0.97rem;
-  color: #fff;
-  background: var(--accent);
-  flex: 1;
-}
-.me-shield__val em {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.75rem;
-  opacity: 0.88;
-}
-
-/* ---- Skill tags ---- */
-.me-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.me-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 999px;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 500;
   color: #3a3556;
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.22);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.me-tag svg { font-size: 1.12rem; color: #6a5cff; }
-.me-tag:hover {
+.me-chip svg { font-size: 1.05rem; color: #6a5cff; }
+.me-chip:hover {
   transform: translateY(-2px);
-  color: #6a5cff;
-  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.55), 0 8px 18px rgba(106, 92, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(120, 100, 255, 0.45);
 }
 
-/* ============================================================
-   AI highlight — the one deliberate colored band
-   ============================================================ */
-.me-ai {
+/* ---- Education ---- */
+.me-edu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.me-edu__row {
   display: flex;
   align-items: center;
-  gap: 18px;
-  padding: 24px 28px;
-  border-radius: 24px;
-  color: #fff;
-  background: linear-gradient(120deg, #6a5cff, #a24bff 55%, #ff5c9d);
-  box-shadow: 0 26px 54px rgba(120, 70, 220, 0.28);
-  margin-top: clamp(8px, 2vh, 20px);
+  gap: 13px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
 }
-.me-ai__icon { font-size: 2.4rem; flex-shrink: 0; }
-.me-ai div { display: flex; flex-direction: column; flex: 1; }
-.me-ai strong { font-size: 1.1rem; }
-.me-ai span { font-size: 0.88rem; opacity: 0.9; }
-.me-ai__go {
-  font-size: 1.8rem;
-  opacity: 0.85;
-  transition: transform 0.3s ease;
+.me-edu__icon {
+  font-size: 1.7rem;
+  color: #6a5cff;
+  flex-shrink: 0;
 }
-.me-ai:hover .me-ai__go { transform: translate(3px, -3px); }
+.me-edu__row div { display: flex; flex-direction: column; }
+.me-edu__row strong {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #2b2740;
+}
+.me-edu__row em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: #6b6685;
+  margin-top: 2px;
+}
 
 /* ============================================================
-   Responsive
+   Responsive — stack the two columns on narrow screens
    ============================================================ */
-@media (max-width: 780px) {
-  .me-hero {
+@media (max-width: 760px) {
+  .me-card {
     grid-template-columns: 1fr;
-    gap: 26px;
+    max-width: 560px;
   }
-  .me-photo {
-    max-width: 280px;
-    margin: 0 auto;
-    align-items: center;
+  .me-col--right {
+    padding-left: 0;
+    border-left: none;
+    padding-top: clamp(20px, 4vh, 28px);
+    border-top: 1px solid rgba(120, 100, 255, 0.16);
   }
 }
 @media (max-width: 480px) {
-  .me-stats { gap: 20px; }
+  .me-card { padding: 24px 18px; border-radius: 28px; }
+  .me-stat { padding: 12px 4px; }
 }

@@ -67,6 +67,12 @@
   opacity: 0.65;
 }
 
+.greeting__welcome strong {
+  font-weight: 700;
+  color: #6a5cff;
+  opacity: 1;
+}
+
 /* ============================================================
    Avatar — centered, dissolving into "clouds" at the bottom
    ============================================================ */
