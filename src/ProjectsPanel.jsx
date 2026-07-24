@@ -6,6 +6,16 @@ import './ProjectsPanel.css'
 
 /* ---- Featured (public) projects --------------------------------------- */
 const FEATURED = [
+    {
+    title: 'FinFlous',
+    tagline: 'Take Full Control of Your Finances with FinFlous',
+    period: 'Jun 2026 – Jul 2026',
+    image: '/projects/finflous.png',
+    desc: 'FinFlous is your all-in-one personal finance manager, designed to help you take control of your money with ease. Whether you\'re tracking your daily expenses, managing your monthly budget, saving for important goals, or organizing your household finances, FinFlous gives you the tools you need in one simple and intuitive app.',
+    tags: ['Supabase', 'React 19', 'JWT', 'Budget Management', 'Track Income & Expenses'],
+    link: 'https://finflous.vercel.app/',
+    accent: '#008000',
+  },
   {
     title: 'Learnova',
     tagline: 'Smart Learning & School Management Platform',
