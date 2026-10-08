@@ -194,11 +194,24 @@ const page = {
   exit: { opacity: 0, y: 16, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
 }
 
-function ProjectCard({ project, isPrivate = false, onPreview }) {
+const thumbnailFor = (image) => image
+  .replace('/projects/', '/projects/thumbs/')
+  .replace(/\.(png|jpe?g)$/i, '.jpg')
+
+function ProjectCard({ project, isPrivate = false, onPreview, priority = false }) {
   return (
     <motion.article className="pj-card pj-anim" style={{ '--accent': project.accent }} whileHover={{ y: -8 }} transition={{ type: 'spring', stiffness: 300, damping: 24 }}>
       <button className="pj-thumb" type="button" onClick={() => onPreview(project)} aria-label={`Open ${project.title} image in full screen`}>
-        <img src={project.image} alt={`${project.title} project preview`} loading="lazy" />
+        <img
+          src={thumbnailFor(project.image)}
+          alt={`${project.title} project preview`}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : 'auto'}
+          decoding="async"
+          width="960"
+          height="540"
+          onLoad={(event) => event.currentTarget.classList.add('is-loaded')}
+        />
         <span className="pj-thumb__glow" aria-hidden="true" />
         {isPrivate && <span className="pj-private-badge"><Icon icon="solar:lock-keyhole-minimalistic-bold" />Internal</span>}
         <span className="pj-zoom-hint"><Icon icon="solar:maximize-square-3-bold-duotone" />View image</span>
@@ -271,7 +284,7 @@ export default function ProjectsPanel({ onClose }) {
           </div>
           <span className="pj-count">{COMPANY_PROJECTS.length} projects</span>
         </div>
-        <div className="pj-grid">{COMPANY_PROJECTS.map((project) => <ProjectCard project={project} key={project.title} isPrivate onPreview={setPreview} />)}</div>
+        <div className="pj-grid">{COMPANY_PROJECTS.map((project, index) => <ProjectCard project={project} key={project.title} isPrivate onPreview={setPreview} priority={index === 0} />)}</div>
       </section>
       <section className="pj-section" aria-labelledby="public-projects-title">
         <div className="pj-section-head pj-anim">
