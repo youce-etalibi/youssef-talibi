@@ -261,16 +261,9 @@ export default function ProjectsPanel({ onClose }) {
         <h2 className="pj-title">Projects</h2>
         <p className="pj-sub">Products, platforms, and automation systems I have designed and built.</p>
       </header>
-      <section className="pj-section" aria-labelledby="public-projects-title">
-        <div className="pj-section-head pj-anim">
-          <div><span className="pj-section-kicker">Public work</span><h3 id="public-projects-title">Featured projects</h3></div>
-          <span className="pj-count">{PUBLIC_PROJECTS.length} projects</span>
-        </div>
-        <div className="pj-grid">{PUBLIC_PROJECTS.map((project) => <ProjectCard project={project} key={project.title} onPreview={setPreview} />)}</div>
-      </section>
       <section className="pj-section pj-section--company" aria-labelledby="company-projects-title">
         <div className="pj-company-head pj-anim">
-          <div className="pj-company-icon"><Icon icon="solar:buildings-3-bold-duotone" /></div>
+          <div className="pj-company-icon"><img src="/experience/cmh.jpg" alt="Cloud Marketing Hub logo" /></div>
           <div className="pj-company-copy">
             <span className="pj-section-kicker">Cloud Marketing Hub (WMN)</span>
             <h3 id="company-projects-title">Enterprise & internal products</h3>
@@ -279,6 +272,13 @@ export default function ProjectsPanel({ onClose }) {
           <span className="pj-count">{COMPANY_PROJECTS.length} projects</span>
         </div>
         <div className="pj-grid">{COMPANY_PROJECTS.map((project) => <ProjectCard project={project} key={project.title} isPrivate onPreview={setPreview} />)}</div>
+      </section>
+      <section className="pj-section" aria-labelledby="public-projects-title">
+        <div className="pj-section-head pj-anim">
+          <div><span className="pj-section-kicker">Public work</span><h3 id="public-projects-title">Featured projects</h3></div>
+          <span className="pj-count">{PUBLIC_PROJECTS.length} projects</span>
+        </div>
+        <div className="pj-grid">{PUBLIC_PROJECTS.map((project) => <ProjectCard project={project} key={project.title} onPreview={setPreview} />)}</div>
       </section>
 
       <AnimatePresence>
