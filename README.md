@@ -35,7 +35,7 @@ Move the mouse to stir the fluid; click to burst a splat. Works on touch too.
 | **Me** | Bio, live-updating stats (age, years of experience, degrees), skills & education |
 | **Projects** | Featured public projects + a locked grid of confidential (NDA) company work |
 | **Experience** | An animated timeline of roles, internships and companies |
-| **Skills** | A 40+ tile tech-stack grid with real brand icons |
+| **Skills** | A centered 30+ tile tech-stack grid with real brand icons |
 | **Contact** | LinkedIn, GitHub and email cards |
 
 ## 🛠️ Built With

@@ -75,7 +75,9 @@
   width: 100%;
   max-width: 900px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  grid-template-columns: repeat(auto-fit, 96px);
+  justify-content: center;
+  align-items: center;
   gap: clamp(10px, 1.4vw, 16px);
 }
 .sk-tile {
@@ -122,7 +124,7 @@
 }
 
 @media (max-width: 480px) {
-  .sk-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .sk-grid { grid-template-columns: repeat(auto-fit, 80px); justify-content: center; }
   .sk-tile { border-radius: 18px; }
   .sk-tile__icon { width: 1.9rem; height: 1.9rem; }
 }

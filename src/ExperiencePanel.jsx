@@ -10,12 +10,12 @@ const EXPERIENCE = [
     company: 'Cloud Marketing Hub',
     logo: '/experience/cmh.jpg',
     type: 'Full-time',
-    period: 'Aug 2024 — Present',
-    duration: '2 yrs',
+    period: 'Aug 2024 — Oct 2026',
+    duration: '2 yrs 3 mos',
     location: 'Tangier, Tanger-Tetouan-Al Hoceima, Morocco',
     mode: 'On-site',
     accent: '#6a5cff',
-    current: true,
+    current: false,
     intro:
       'Building software and automation tools that streamline internal operations.',
     points: [

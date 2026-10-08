@@ -1,28 +1,35 @@
-import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import gsap from 'gsap'
 import './ProjectsPanel.css'
 
-/* ---- Featured (public) projects --------------------------------------- */
-const FEATURED = [
-    {
+const PUBLIC_PROJECTS = [
+  {
     title: 'FinFlous',
-    tagline: 'Take Full Control of Your Finances with FinFlous',
-    period: 'Jun 2026 – Jul 2026',
+    tagline: 'Personal Finance Manager',
+    period: 'Jun 2026 - Jul 2026',
     image: '/projects/finflous.png',
-    desc: 'FinFlous is your all-in-one personal finance manager, designed to help you take control of your money with ease. Whether you\'re tracking your daily expenses, managing your monthly budget, saving for important goals, or organizing your household finances, FinFlous gives you the tools you need in one simple and intuitive app.',
-    tags: ['Supabase', 'React 19', 'JWT', 'Budget Management', 'Track Income & Expenses'],
+    desc: 'An all-in-one personal finance app for tracking expenses, managing budgets, saving toward goals, and organizing household finances in one intuitive workspace.',
+    tools: [
+      { label: 'Supabase', icon: 'simple-icons:supabase' },
+      { label: 'React 19', icon: 'simple-icons:react' },
+      { label: 'JWT', icon: 'logos:jwt-icon' },
+    ],
     link: 'https://finflous.vercel.app/',
-    accent: '#008000',
+    accent: '#148447',
   },
   {
     title: 'Learnova',
-    tagline: 'Smart Learning & School Management Platform',
-    period: 'Jun 2026 – Jul 2026',
+    tagline: 'Smart Learning & School Management',
+    period: 'Jun 2026 - Jul 2026',
     image: '/projects/learnova.png',
-    desc: 'A modern e-learning and academic management platform for schools and training centers. It brings schedules, grades, absences, announcements, online courses, progress tracking, and role-based dashboards into one clean, secure system — with JWT auth, Google OAuth, a multilingual UI and full RTL Arabic support.',
-    tags: ['Laravel 12', 'React 19', 'JWT', 'Google OAuth', 'Multilingual'],
+    desc: 'A modern academic platform bringing schedules, grades, absences, announcements, courses, progress tracking, and role-based dashboards into one secure multilingual system.',
+    tools: [
+      { label: 'Laravel 12', icon: 'simple-icons:laravel' },
+      { label: 'React 19', icon: 'simple-icons:react' },
+      { label: 'Google OAuth', icon: 'flat-color-icons:google' },
+    ],
     link: 'https://github.com/youce-etalibi/LEARNOVA-APP.git',
     accent: '#6a5cff',
   },
@@ -31,160 +38,281 @@ const FEATURED = [
     tagline: 'All-in-One Fitness Platform',
     period: 'May 2024',
     image: '/projects/evolution.jpg',
-    desc: 'A complete fitness web app: build personalized workouts and track your progress over time, a calories calculator that computes daily needs from your goals, age, weight, height and activity level, and an integrated store for clothes, supplements and equipment.',
-    tags: ['Laravel', 'React.js', 'E-commerce'],
+    desc: 'A complete fitness platform for personalized workouts, progress tracking, daily calorie calculations, and shopping for clothing, supplements, and equipment.',
+    tools: [
+      { label: 'Laravel', icon: 'simple-icons:laravel' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'E-commerce', icon: 'solar:cart-large-2-bold-duotone' },
+    ],
     link: 'https://github.com/youce-etalibi/EvoApp',
-    accent: '#ff5c9d',
+    accent: '#e84f8d',
   },
   {
     title: 'TOUIL DIGICOM',
-    tagline: 'Official Company Website',
-    period: 'Apr 2024 – May 2024',
+    tagline: 'Company Website & Booking Platform',
+    period: 'Apr 2024 - May 2024',
     image: '/projects/touil_digicom.png',
-    desc: "Led the creation of the company's official website from concept to execution — a dynamic platform with a captivating landing page and a seamless training-booking system, backed by a user-friendly admin dashboard reflecting the company's vision and an improved user experience.",
-    tags: ['Landing Page', 'Booking System', 'Admin Dashboard'],
+    desc: 'The company website, designed and delivered from concept to launch with a dynamic landing page, training booking flow, and an easy-to-use administration dashboard.',
+    tools: [
+      { label: 'Web Design', icon: 'solar:palette-bold-duotone' },
+      { label: 'Booking', icon: 'solar:calendar-bold-duotone' },
+      { label: 'Admin', icon: 'solar:shield-user-bold-duotone' },
+    ],
     link: 'https://touildigicom.ma/',
-    accent: '#ff9a5c',
+    accent: '#ef7e3e',
   },
 ]
 
-/* ---- Private / confidential company projects (under NDA) --------------- */
-const PRIVATE = [
-  { title: 'Internal Automation Suite', icon: 'solar:settings-bold-duotone' },
-  { title: 'Marketing Analytics Dashboard', icon: 'solar:chart-2-bold-duotone' },
-  { title: 'Lead Management System', icon: 'solar:users-group-rounded-bold-duotone' },
-  { title: 'Email Campaign Engine', icon: 'solar:letter-bold-duotone' },
-  { title: 'CRM Integration Tools', icon: 'solar:link-circle-bold-duotone' },
-  { title: 'Workflow Automation Bots', icon: 'solar:magic-stick-3-bold-duotone' },
-  { title: 'Reporting & BI Platform', icon: 'solar:pie-chart-2-bold-duotone' },
-  { title: 'Data Pipeline Services', icon: 'solar:database-bold-duotone' },
-  { title: 'Client Onboarding Portal', icon: 'solar:user-plus-bold-duotone' },
-  { title: 'API Integration Hub', icon: 'solar:cloud-bold-duotone' },
+const COMPANY_PROJECTS = [
+  {
+    title: 'Scripto Buildo',
+    tagline: 'No-Code Browser Automation Builder',
+    image: '/projects/scripto_buildo.png',
+    desc: 'A visual drag-and-drop platform for building browser automations with reusable actions, conditions, navigation, and script generation - no programming required.',
+    tools: [
+      { label: 'No-Code', icon: 'solar:widget-add-bold-duotone' },
+      { label: 'Automation', icon: 'solar:magic-stick-3-bold-duotone' },
+      { label: 'Workflows', icon: 'solar:branching-paths-down-bold-duotone' },
+    ],
+    accent: '#6d55e8',
+  },
+  {
+    title: 'Summit',
+    tagline: 'Resource & Revenue Performance',
+    image: '/projects/summit.png',
+    desc: 'A management platform for organizing resources, setting financial targets, tracking revenue goals, and evaluating performance across teams from one dashboard.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+    ],
+    accent: '#4f6bff',
+  },
+  {
+    title: 'Warmix Agent Executor',
+    tagline: 'Distributed Automation Engine',
+    image: '/projects/wamix_agent.png',
+    desc: 'An execution agent that receives remote requests, launches browser automation across multiple environments, and reports task progress and execution status.',
+    tools: [
+      { label: 'Python', icon: 'simple-icons:python' },
+      { label: 'Selenium', icon: 'simple-icons:selenium' },
+      { label: 'Playwright', icon: 'simple-icons:playwright' },
+    ],
+    accent: '#3c7bdb',
+  },
+  {
+    title: 'Maestro Box',
+    tagline: 'Enterprise Employee Workspace',
+    image: '/projects/maestrobox.png',
+    desc: 'A unified workspace for employee profiles, meetings, workshops, training, breaks, organizational hierarchy, community activity, and the internal company portal.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+    ],
+    accent: '#624ad8',
+  },
+  {
+    title: 'Maestro Box Connect',
+    tagline: 'Community, Chat & Control Panel',
+    image: '/projects/mb_community_chat_control_panel.png',
+    desc: 'One integrated app combining the employee community, organized team messaging, and centralized administration for users, roles, permissions, and application access.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+      { label: 'RBAC', icon: 'solar:shield-keyhole-bold-duotone' },
+    ],
+    accent: '#ec5d8f',
+  },
+  {
+    title: 'Seedlytics',
+    tagline: 'Email Account Management & Monitoring',
+    image: '/projects/seedlytics.png',
+    desc: 'A centralized platform that brings email accounts from multiple providers into one dashboard for status monitoring, activity tracking, and operational management.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+    ],
+    accent: '#9a55d7',
+  },
+  {
+    title: 'Warmix Local',
+    tagline: 'Automated Email Warm-Up Executor',
+    image: '/projects/wamix_local.png',
+    desc: 'A reliable local execution environment that automates email warm-up scripts inside RDP sessions, reducing repetitive manual browser work.',
+    tools: [
+      { label: 'Python', icon: 'simple-icons:python' },
+      { label: 'Selenium', icon: 'simple-icons:selenium' },
+      { label: 'RDP', icon: 'solar:monitor-smartphone-bold-duotone' },
+    ],
+    accent: '#3479c9',
+  },
+  {
+    title: 'Mailkit',
+    tagline: 'Email Marketing Productivity Toolkit',
+    image: '/projects/mailkit.png',
+    desc: 'A collection of practical email marketing tools in one user-friendly workspace, built to automate repetitive operations and help production teams work faster.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+    ],
+    accent: '#ef775c',
+  },
+  {
+    title: 'Rampora',
+    tagline: 'Browser-Based Warm-Up Automation',
+    image: '/projects/rampora.png',
+    desc: 'A centralized email warm-up platform using a custom browser extension to remotely launch, manage, and monitor automated tasks across multiple browsers.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+      { label: 'Extension', icon: 'solar:plug-circle-bold-duotone' },
+    ],
+    accent: '#e65d72',
+  },
+  {
+    title: 'Spamurai',
+    tagline: 'Email IP Monitoring & Spam Detection',
+    image: '/projects/spamurai.png',
+    desc: 'A monitoring system for tracking IP reputation, detecting inbox-to-spam changes, comparing fresh and old IP performance, and supporting better sending decisions.',
+    tools: [
+      { label: 'Go Fiber', icon: 'simple-icons:go' },
+      { label: 'React', icon: 'simple-icons:react' },
+      { label: 'PostgreSQL', icon: 'simple-icons:postgresql' },
+    ],
+    accent: '#db444f',
+  },
 ]
 
-/* ---- Framer variants (page + hovers) ---------------------------------- */
 const page = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
   exit: { opacity: 0, y: 16, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
 }
 
+function ProjectCard({ project, isPrivate = false, onPreview }) {
+  return (
+    <motion.article className="pj-card pj-anim" style={{ '--accent': project.accent }} whileHover={{ y: -8 }} transition={{ type: 'spring', stiffness: 300, damping: 24 }}>
+      <button className="pj-thumb" type="button" onClick={() => onPreview(project)} aria-label={`Open ${project.title} image in full screen`}>
+        <img src={project.image} alt={`${project.title} project preview`} loading="lazy" />
+        <span className="pj-thumb__glow" aria-hidden="true" />
+        {isPrivate && <span className="pj-private-badge"><Icon icon="solar:lock-keyhole-minimalistic-bold" />Internal</span>}
+        <span className="pj-zoom-hint"><Icon icon="solar:maximize-square-3-bold-duotone" />View image</span>
+      </button>
+      <div className="pj-body">
+        <div className="pj-head">
+          <h3>{project.title}</h3>
+          {project.period && <span className="pj-period">{project.period}</span>}
+        </div>
+        <p className="pj-tagline">{project.tagline}</p>
+        <p className="pj-desc">{project.desc}</p>
+        <div className="pj-tools" aria-label="Tools and technologies">
+          {project.tools.map((tool) => <span className="pj-tool" key={tool.label}><Icon icon={tool.icon} aria-hidden="true" />{tool.label}</span>)}
+        </div>
+        {project.link && (
+          <a className="pj-link" href={project.link} target="_blank" rel="noreferrer">
+            <Icon icon={project.link.includes('github') ? 'mdi:github' : 'solar:link-round-angle-bold-duotone'} />
+            {project.link.includes('github') ? 'View on GitHub' : 'Visit website'}
+            <Icon icon="solar:arrow-right-up-linear" className="pj-link__go" />
+          </a>
+        )}
+      </div>
+    </motion.article>
+  )
+}
+
 export default function ProjectsPanel({ onClose }) {
   const scope = useRef(null)
+  const [preview, setPreview] = useState(null)
 
   useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose()
+    const onKey = (event) => {
+      if (event.key !== 'Escape') return
+      if (preview) setPreview(null)
+      else onClose()
+    }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
+  }, [onClose, preview])
 
-  /* GSAP staggered reveal of headings + cards */
+  useEffect(() => {
+    if (!preview) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previousOverflow }
+  }, [preview])
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.pj-anim', {
-        y: 46,
-        opacity: 0,
-        filter: 'blur(8px)',
-        duration: 0.8,
-        stagger: 0.09,
-        ease: 'power3.out',
-        delay: 0.25,
-      })
+      gsap.from('.pj-anim', { y: 40, opacity: 0, filter: 'blur(8px)', duration: 0.75, stagger: 0.055, ease: 'power3.out', delay: 0.18 })
     }, scope)
     return () => ctx.revert()
   }, [])
 
   return (
-    <motion.div
-      className="pj-page"
-      ref={scope}
-      variants={page}
-      initial="hidden"
-      animate="show"
-      exit="exit"
-      role="region"
-      aria-label="Projects by Youssef Talibi"
-    >
-      <button className="pj-back" onClick={onClose} aria-label="Back">
-        <Icon icon="solar:arrow-left-linear" />
-        <span>Back</span>
-      </button>
-
-      <h2 className="pj-title pj-anim">Projects</h2>
-      <p className="pj-sub pj-anim">A catalogue of things I've designed &amp; built</p>
-
-      {/* ===== Featured ===== */}
-      <div className="pj-grid">
-        {FEATURED.map((p) => (
-          <motion.article
-            className="pj-card pj-anim"
-            key={p.title}
-            style={{ '--accent': p.accent }}
-            whileHover={{ y: -8 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-          >
-            <div className="pj-thumb">
-              <img src={p.image} alt={p.title} loading="lazy" />
-              <span className="pj-thumb__glow" aria-hidden="true" />
-            </div>
-            <div className="pj-body">
-              <div className="pj-head">
-                <h3>{p.title}</h3>
-                <span className="pj-period">{p.period}</span>
-              </div>
-              <p className="pj-tagline">{p.tagline}</p>
-              <p className="pj-desc">{p.desc}</p>
-              <div className="pj-tags">
-                {p.tags.map((t) => (
-                  <span className="pj-tag" key={t}>{t}</span>
-                ))}
-              </div>
-              <a className="pj-link" href={p.link} target="_blank" rel="noreferrer">
-                <Icon
-                  icon={
-                    p.link.includes('github')
-                      ? 'mdi:github'
-                      : 'solar:link-round-angle-bold-duotone'
-                  }
-                />
-                {p.link.includes('github') ? 'View on GitHub' : 'Visit website'}
-                <Icon icon="solar:arrow-right-up-linear" className="pj-link__go" />
-              </a>
-            </div>
-          </motion.article>
-        ))}
-      </div>
-
-      {/* ===== Private / NDA ===== */}
-      <div className="pj-private-head pj-anim">
-        <Icon icon="solar:lock-keyhole-bold-duotone" />
-        <div>
-          <strong>Confidential Work</strong>
-          <span>
-            10+ projects built at Cloud Marketing Hub (WMN) — private under company
-            policy &amp; NDA.
-          </span>
+    <motion.div className="pj-page" ref={scope} variants={page} initial="hidden" animate="show" exit="exit" role="region" aria-label="Projects by Youssef Talibi">
+      <button className="pj-back" type="button" onClick={onClose} aria-label="Back"><Icon icon="solar:arrow-left-linear" /><span>Back</span></button>
+      <header className="pj-hero pj-anim">
+        <span className="pj-eyebrow">Selected work</span>
+        <h2 className="pj-title">Projects</h2>
+        <p className="pj-sub">Products, platforms, and automation systems I have designed and built.</p>
+      </header>
+      <section className="pj-section" aria-labelledby="public-projects-title">
+        <div className="pj-section-head pj-anim">
+          <div><span className="pj-section-kicker">Public work</span><h3 id="public-projects-title">Featured projects</h3></div>
+          <span className="pj-count">{PUBLIC_PROJECTS.length} projects</span>
         </div>
-      </div>
+        <div className="pj-grid">{PUBLIC_PROJECTS.map((project) => <ProjectCard project={project} key={project.title} onPreview={setPreview} />)}</div>
+      </section>
+      <section className="pj-section pj-section--company" aria-labelledby="company-projects-title">
+        <div className="pj-company-head pj-anim">
+          <div className="pj-company-icon"><Icon icon="solar:buildings-3-bold-duotone" /></div>
+          <div className="pj-company-copy">
+            <span className="pj-section-kicker">Cloud Marketing Hub (WMN)</span>
+            <h3 id="company-projects-title">Enterprise & internal products</h3>
+            <p>Production tools built for real teams and operations. Product details are shared at a high level to respect company confidentiality.</p>
+          </div>
+          <span className="pj-count">{COMPANY_PROJECTS.length} projects</span>
+        </div>
+        <div className="pj-grid">{COMPANY_PROJECTS.map((project) => <ProjectCard project={project} key={project.title} isPrivate onPreview={setPreview} />)}</div>
+      </section>
 
-      <div className="pj-locked-grid">
-        {PRIVATE.map((p) => (
+      <AnimatePresence>
+        {preview && (
           <motion.div
-            className="pj-locked pj-anim"
-            key={p.title}
-            whileHover={{ y: -5 }}
-            transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-            title="Private — under NDA"
+            className="pj-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onMouseDown={(event) => event.target === event.currentTarget && setPreview(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${preview.title} image preview`}
           >
-            <Icon icon={p.icon} className="pj-locked__icon" />
-            <span className="pj-locked__title">{p.title}</span>
-            <span className="pj-locked__badge">
-              <Icon icon="solar:lock-keyhole-minimalistic-bold" />
-              Private
-            </span>
+            <motion.figure
+              className="pj-lightbox__frame"
+              initial={{ opacity: 0, scale: 0.88, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 18 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+            >
+              <button className="pj-lightbox__close" type="button" onClick={() => setPreview(null)} aria-label="Close image preview">
+                <Icon icon="solar:close-circle-bold" />
+              </button>
+              <img src={preview.image} alt={`${preview.title} full project preview`} />
+              <figcaption>
+                <span>{preview.title}</span>
+                <small>{preview.tagline}</small>
+              </figcaption>
+            </motion.figure>
           </motion.div>
-        ))}
-      </div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }

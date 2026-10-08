@@ -1,0 +1,188 @@
+Scripto Buildo — No-Code Browser Automation Builder
+
+Scripto Buildo is an internal automation platform I designed and developed at CMH to simplify the creation of browser automation scripts without requiring programming skills.
+
+The application provides a visual drag-and-drop interface that allows users to build automation workflows by connecting predefined actions such as clicking, typing, navigating, waiting, and applying conditions.
+
+Its main goal is to make browser automation accessible to non-technical users, reduce development time, and simplify repetitive tasks through visual workflow creation.
+
+Key Features: No-code automation builder, drag-and-drop workflow editor, visual logic configuration, browser interaction automation, and script generation.
+
+
+
+
+
+
+
+
+
+Summit — Enterprise Resource & Revenue Performance Management Platform
+
+Summit is an internal management platform I designed and developed at CMH to centralize company resources, define revenue objectives, and track business performance.
+
+The application allows management teams to organize available resources, set financial targets, monitor progress toward revenue goals, and evaluate performance across different teams and entities through a unified dashboard.
+
+Its main goal is to improve resource planning, provide clear visibility into business objectives, and support better decision-making through structured performance tracking.
+
+Tech Stack: Go Fiber, React.js, PostgreSQL.
+
+Key Features: Resource management, revenue target planning, progress tracking, team performance monitoring, and centralized reporting.
+
+
+
+
+
+
+
+Warmix Agent Executor — Distributed Browser Automation Execution Engine
+
+Warmix Agent Executor is an internal automation application I developed at CMH to receive and execute automation requests across multiple browsers and environments.
+
+The application acts as an execution agent, processing remote requests and launching browser automation scripts using Selenium, Playwright, and Python. It enables automated task execution, process monitoring, and execution status reporting.
+
+Its main goal is to support distributed automation, reduce manual intervention, and provide reliable script execution across multiple browser sessions.
+
+Key Features: Remote script execution, multi-browser automation, Selenium & Playwright integration, task management, and execution status tracking.
+
+
+
+
+
+
+Warmix Central — Distributed Browser Automation & Email Warm-Up Management Platform
+
+Warmix Central is an internal automation platform I designed and developed at CMH to centrally manage and execute email warm-up processes across multiple browsers, Remote Desktop (RDP) sessions, and servers.
+
+The application allows production teams to launch, control, and monitor automation scripts from a single interface, coordinating distributed execution across multiple environments.
+
+Its main goal is to simplify large-scale automation, reduce manual intervention, and improve operational efficiency through centralized process management.
+
+Key Features: Centralized automation control, multi-RDP execution, browser and session management, distributed script execution, and process monitoring.
+
+
+
+
+
+
+
+
+
+Maestro Box Admin Control Panel is a centralized administration module I designed and developed at CMH to manage the entire Maestro Box ecosystem.
+
+The application allows administrators to manage users, organizational structures, roles, permissions, and access to integrated internal and external applications from a single interface.
+
+Its main goal is to simplify system administration, centralize access control, and ensure efficient management of the company's digital workspace.
+
+**Tech Stack:** Go Fiber, React.js, PostgreSQL.
+
+
+
+
+
+
+
+
+Maestro Box Chat is an internal communication module I developed at CMH as part of the Maestro Box ecosystem.
+
+The application provides a centralized messaging environment designed to facilitate professional communication between managers and teams while keeping conversations organized and documented.
+
+Its main goal is to improve information sharing, preserve communication history, and make internal collaboration more structured and efficient.
+
+**Tech Stack:** Go Fiber, React.js, PostgreSQL.
+
+
+
+Maestro Box Community is an internal social networking module I designed and developed at CMH as part of the Maestro Box ecosystem.
+
+The application connects employees through posts, comments, reactions, polls, and social interactions, creating a shared space for communication, knowledge sharing, and team engagement.
+
+Its main goal is to strengthen collaboration, improve internal communication, and build a more connected workplace.
+
+**Tech Stack:** Go Fiber, React.js, PostgreSQL.
+
+
+
+
+
+
+**Maestro Box — Enterprise Workspace & Employee Management Platform**
+
+Maestro Box is an internal enterprise platform I conceptualized, designed, and developed at CMH to centralize employee management, internal communication, and organizational activities within a unified digital workspace.
+
+The platform brings together essential modules, including **meetings, workshops, training sessions, break management, employee profiles, organizational hierarchy, community interactions, and an internal portal**.
+
+Its main goal is to improve team collaboration, simplify daily operations, and create a structured, connected, and efficient working environment across the company.
+
+Built with **Go Fiber, React.js, and PostgreSQL**, Maestro Box provides a centralized and scalable solution for internal organization, communication, and workforce management.
+
+
+
+
+
+
+
+
+
+**Seedlytics — Centralized Email Account Management & Monitoring Platform**
+
+Seedlytics is an internal application I designed and developed at CMH to centralize and manage email accounts from multiple providers and sources in a single platform.
+
+The application brings together different types of email accounts, allowing production teams to monitor their statuses, track account activity, and access essential information through a unified dashboard. Its main goal is to simplify account management, improve visibility, and reduce the complexity of handling scattered data.
+
+Built with **Go Fiber, React.js, and PostgreSQL**, Seedlytics provides centralized account monitoring, status tracking, and data management to improve operational efficiency.
+
+
+
+
+
+
+
+**Warmix Local — Automated Email Warm-Up Script Executor**
+
+Warmix Local is an internal automation application I developed at CMH to execute email account warm-up scripts within Remote Desktop Protocol (RDP) sessions.
+
+Powered by **Python and Selenium**, the application automates browser interactions and runs warm-up scripts across email accounts, reducing manual work and improving operational efficiency.
+
+Warmix Local provides a reliable execution environment for repetitive warm-up tasks, helping production teams manage email account automation more efficiently.
+
+
+
+
+
+
+
+
+
+**Mailkit — Email Marketing Tools & Productivity Platform**
+
+Mailkit is an internal application I designed and developed at CMH to centralize essential email marketing tools in a single platform.
+
+The application provides mailers with a collection of practical tools to simplify daily operations, automate repetitive tasks, and improve workflow efficiency. Its main goal is to help teams work faster, reduce manual effort, and maintain higher quality in email marketing activities.
+
+Built with **Go Fiber, React.js, and PostgreSQL**, Mailkit offers a centralized, user-friendly workspace designed to streamline email marketing operations and boost team productivity.
+
+
+
+
+
+
+**Rampora — Browser-Based Email Warm-Up Automation Platform**
+
+Rampora is an internal automation platform I designed and developed at CMH to simplify and automate email warm-up processes across multiple browsers.
+
+The application uses a **custom browser extension** to remotely launch, manage, and execute automated warm-up tasks directly from a centralized interface, reducing manual work and improving operational efficiency.
+
+Built with **Go Fiber, React.js, and PostgreSQL**, Rampora provides centralized process management, browser automation, and execution monitoring to streamline email warm-up operations.
+
+
+
+
+
+
+
+
+**Spamurai — Email IP Monitoring & Spam Detection System**
+
+Spamurai is an internal application I designed and developed at CMH to monitor email sending performance and track IP reputation through the **Fresh & Old IP** concept. It helps production teams identify IPs delivering to spam, monitor inbox-to-spam transitions, and make better sending decisions.
+
+Built with **Go Fiber, React.js, and PostgreSQL**, Spamurai provides automated monitoring, data analysis, and a centralized dashboard for tracking IP performance.
